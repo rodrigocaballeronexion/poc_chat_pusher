@@ -1,0 +1,21 @@
+<div *ngIf="isLoggedIn()">
+  <app-chat-room></app-chat-room>
+</div>
+<div *ngIf="!isLoggedIn()"
+  class="d-flex justify-content-center">
+  <div>
+    <h1>Pick a user</h1>
+    <!-- <div  >
+      <button type="button" class="btn-info"  ></button>
+    </div> -->
+
+    <div class="chat_people">
+      <a (click)="login(item)" href="#" *ngFor="let item of users">
+        <div class="chat_ib">
+          <h3>{{ item.name }}</h3>
+        </div>
+      </a>
+    </div>
+
+  </div>
+</div>

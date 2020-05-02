@@ -1,0 +1,144 @@
+<div class="container">
+  <h3 *ngIf="currentChannel" class=" text-center">{{currentChannel.chatRoom.name}}</h3>
+  <h3 *ngIf="!currentChannel" class=" text-center">Select a chat room</h3>
+  <div class="messaging">
+        <div class="inbox_msg">
+          <div class="inbox_people">
+            <div class="headind_srch">
+              <div class="recent_heading">
+                <h4>Chat rooms</h4>
+              </div>
+              <a class="nav-link" (click)="logout()" href="#">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                Logout
+              </a>
+              <div class="srch_bar">
+                <div class="stylish-input-group">
+                  <input type="text" class="search-bar"  placeholder="Search" >
+                  <span class="input-group-addon">
+                  <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                  </span> </div>
+              </div>
+            </div>
+            <div class="inbox_chat">
+              <div *ngFor="let item of channels" class="chat_list">
+                <div class="chat_people">
+                  <a (click)="checkChannel(item)" href="#">
+                    <div class="chat_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                    <div class="chat_ib">
+                      <h5>{{item.chatRoom.name}}</h5>
+                      <!-- <p>Test, which is a new approach to have all solutions 
+                        astrology under one roof.</p>  -->
+                    </div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mesgs">
+            <div *ngIf="currentChannel">
+              <div #msg_history class="msg_history">
+
+                <div  *ngFor="let message of currentChannel.messagesReceived">
+                  <div *ngIf="!isFromCurrentUser(message)" class="incoming_msg">
+                    <div><b>{{ message.name }}</b></div>
+                    <div class="received_msg">
+                      <div class="received_withd_msg">
+                        <p>{{ message.message }}</p>
+                        <span class="time_date"> {{ message.when | date :'short' }}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="isFromCurrentUser(message)" class="outgoing_msg">
+                    <div class="sent_msg">
+                      <p>{{ message.message }}</p>
+                      <span class="time_date"> {{ message.when | date :'short' }}</span>
+                    </div>
+                  </div>
+                </div>              
+              </div>
+              <div class="type_msg">
+                <div class="input_msg_write">
+
+                  <input type="text" class="write_msg" placeholder="Type a message" [(ngModel)]="messageText" />
+                  <button type="button" class="btn btn-info mt-2" (click)="sendMessage(messageText)" >Send</button>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <p class="text-center top_spac"> Design by <a target="_blank" href="https://bootsnipp.com/snippets/1ea0N">Sunil Rajput</a></p>
+        
+      </div></div>
+
+<!-- <div class="container-fluid">
+  <div class="row">
+    <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+      <div class="sidebar-sticky">
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">
+          <span>Chat rooms</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+          </a>
+        </h6>
+        <ul class="nav flex-column mb-2">
+
+          <li *ngFor="let item of channels" class="nav-item">
+
+            <a class="nav-link" (click)="checkChannel(item)" href="#">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+              {{item.chatRoom.name}}
+            </a>
+          </li>
+        </ul>
+
+        <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">
+          <span>Settings</span>
+          <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus-circle"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+          </a>
+        </h6>
+        <a class="nav-link" (click)="logout()" href="#">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-file-text"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          Logout
+        </a>
+      </div>
+    </nav>
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+      <div *ngIf="currentChannel">
+        <h2>{{currentChannel.chatRoom.name}}</h2>
+
+        <div class="mesgs">
+          <div class="msg_history">
+            <div *ngFor="let message of currentChannel.messagesReceived">
+              <div *ngIf="!isFromCurrentUser(message)" class="incoming_msg">
+                <div><b>{{ message.name }}</b></div>
+                <div class="received_msg">
+                  <div class="received_withd_msg">
+                    <p>{{ message.message }}</p>
+                    <span class="time_date"> {{ message.when | date :'short' }}</span>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="isFromCurrentUser(message)" class="outgoing_msg">
+                <div class="sent_msg">
+                  <p>{{ message.message }}</p>
+                  <span class="time_date"> {{ message.when | date :'short' }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="type_msg">
+          <div class="input_msg_write">
+            <input type="text" class="write_msg" placeholder="Type a message" [(ngModel)]="messageText" />
+            <button type="button" class="btn btn-info mt-2" (click)="sendMessage(messageText)" >Send</button>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</div> -->
