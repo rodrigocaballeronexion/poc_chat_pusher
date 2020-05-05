@@ -44,7 +44,7 @@ initChannels(chatRooms: ChatRoom[]): Array<ChannelInfo> {
   }
 
   subscribe(info: ChannelInfo) {
-    console.log('Subscribing to channel: '+ info.chatRoom.channelId);
+    console.log('Subscribing to channel: ' + info.chatRoom.channelId);
     info.messagesChannel = info.channel.subscribe(info.chatRoom.channelId);
     return info.messagesChannel;
   }

@@ -44,3 +44,15 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
+/.vs/*
+obj/
+bin/
+Chat.ClientAPI/.vs/Chat.ClientAPI/v16/.suo
+Chat.ClientAPI/.vs/Chat.ClientAPI/v16/Server/sqlite3/db.lock
+.gitignore
+Chat.ClientAPI/.vs/Chat.ClientAPI/v16/Server/sqlite3/storage.ide
+Chat.ClientAPI/.vs/Chat.ClientAPI/v16/Server/sqlite3/storage.ide-shm
+Chat.ClientAPI/.vs/Chat.ClientAPI/v16/Server/sqlite3/storage.ide-wal
+Chat.API/ChatApp.db-shm
+Chat.API/ChatApp.db-wal

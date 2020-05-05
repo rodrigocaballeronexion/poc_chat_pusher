@@ -6,7 +6,7 @@ using Chat.API.Data;
 using Chat.API.Model;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
+
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using PusherServer;
@@ -17,16 +17,13 @@ namespace Chat.API.Controllers
     public class ChatController : ControllerBase
     {
         private readonly ILogger<ChatController> _logger;
-        private readonly IConfiguration _config;
         private readonly ChatDbContext _dbContext;
 
         public ChatController(ILogger<ChatController> logger
-            , IConfiguration config
             , ChatDbContext dbContext)
         {
             _dbContext = dbContext;
             _logger = logger;
-            _config = config;
         }
 
         [HttpGet]
@@ -50,14 +47,7 @@ namespace Chat.API.Controllers
                 return BadRequest("Unknown channel" + playerPackage.channel_name);
             }
 
-            var options = new PusherOptions();
-            options.Cluster = channel.ChannelApp.Cluster;
-
-            var pusher = new Pusher(
-                channel.ChannelApp.AppId,
-                channel.ChannelApp.Key,
-                channel.ChannelApp.Secret, options);
-
+            var pusher = GetPusher(channel);
             var auth = pusher.Authenticate(playerPackage.channel_name, playerPackage.socket_id);
 
             return Ok(auth);
@@ -229,14 +219,18 @@ namespace Chat.API.Controllers
 
         private Pusher GetPusher(Channel channel)
         {
+            var secret = GetSecret();
             return new Pusher(
                 channel.ChannelApp.AppId,
                 channel.ChannelApp.Key,
-                channel.ChannelApp.Secret,
+                secret,
                 new PusherOptions{
                     Cluster = channel.ChannelApp.Cluster
                 }
             );
         }
+
+        private string GetSecret() 
+        => Environment.GetEnvironmentVariable("PUSHER_SECRET");
     }
 }

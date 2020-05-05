@@ -13,6 +13,8 @@ namespace Chat.API
     {
         public static void Main(string[] args)
         {
+            ValidateEnvVar();
+
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -22,5 +24,12 @@ namespace Chat.API
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+
+        private static void ValidateEnvVar()
+        {
+            var secret = Environment.GetEnvironmentVariable("PUSHER_SECRET");
+            if(secret == null)
+                throw new ApplicationException("Env var: PUSHER_SECRET not defined");
+        }
     }
 }
