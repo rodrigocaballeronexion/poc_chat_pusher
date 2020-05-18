@@ -8,9 +8,14 @@ using Newtonsoft.Json;
 
 namespace Chat.ClientAPI.Base
 {
-    public class RestService
+    public class RestService : IRestService
     {
         private readonly HttpClient _httpClient = new HttpClient();
+
+        public RestService()
+        {
+            _httpClient.BaseAddress = new Uri("http://localhost:5000");
+        }
 
         public async Task<TResponseType> MakeRequest<TResponseType>(Request request) where TResponseType : class
         {
@@ -24,6 +29,11 @@ namespace Chat.ClientAPI.Base
             responseObject = JsonConvert.DeserializeObject<TResponseType>(response);
 
             return responseObject;
+        }
+
+        public async Task<HttpResponseMessage> MakeRequest(Request request)
+        {
+            return await MakeHttpRequest(request);
         }
 
         private async Task<HttpResponseMessage> MakeHttpRequest(Request request)

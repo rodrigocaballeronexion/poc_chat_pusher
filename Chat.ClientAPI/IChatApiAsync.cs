@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Chat.ClientAPI
 {
-    public interface IChatRestService
+    public interface IChatApiAsync
     {
+        Task<HttpResponseMessage> Healthcheck();
+
+
+
         /*
          getUsers(): Observable<User[]> {
             return this.http.get<User[]>(this.baseUrl + '/users' );
