@@ -42,7 +42,7 @@ namespace Chat.ClientAPI.Base
 
             if (request.Data != null)
             {
-                httpMessage.Content = new StringContent(request.Data.ToString(), Encoding.UTF8, "application/json");
+                httpMessage.Content = new StringContent(JsonConvert.SerializeObject(request.Data), Encoding.UTF8, "application/json");
             }
 
             var responseMessage =

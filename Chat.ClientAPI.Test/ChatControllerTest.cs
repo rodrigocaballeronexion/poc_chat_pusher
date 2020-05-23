@@ -23,5 +23,13 @@ namespace Chat.ClientAPI.Test
             response.Should().NotBeNull();
             response.IsSuccessStatusCode.Should().BeTrue();
         }
+
+        // [Test]
+        // public async Task HealthCheck()
+        // { 
+        //     var response = await _chatApiAsync!.Healthcheck(); 
+        //     response.Should().NotBeNull();
+        //     response.IsSuccessStatusCode.Should().BeTrue();
+        // }
     }
 }

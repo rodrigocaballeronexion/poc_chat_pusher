@@ -6,10 +6,14 @@ namespace Chat.ClientAPI
         {
             public const string HealthCheck = "/hello"; // GET
 
-            // public static string BuildVersionGet(string version)
-            // {
-            //     return Assets.Replace("{version}", version);
-            // }
+            public const string SendMessage = "/channel/message"; // POST
+
+            public const string Messages = "/channel/{channelId}/messages/"; // POST
+
+            public static string BuildMessageGet(string channelId)
+            {
+                return Messages.Replace("{channelId}", channelId);
+            }
         }
     }
 }
